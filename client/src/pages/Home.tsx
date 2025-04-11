@@ -19,7 +19,6 @@ const Home: React.FC = () => {
       <FeatureSection />
       <BreedChooser />
       <GuidePreview />
-      <TestimonialSection />
       <CallToAction />
     </>
   );
