@@ -575,4 +575,5 @@ export class SupabaseStorage implements IStorage {
 }
 
 // Use SupabaseStorage in production and MemStorage for testing if needed
-export const storage = new SupabaseStorage();
+import { DatabaseStorage } from './database-storage';
+export const storage = new DatabaseStorage();
