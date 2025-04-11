@@ -1,4 +1,5 @@
 import { createClient } from '@supabase/supabase-js';
+import 'dotenv/config';
 
 if (!process.env.SUPABASE_URL) {
   throw new Error('Missing SUPABASE_URL environment variable');
