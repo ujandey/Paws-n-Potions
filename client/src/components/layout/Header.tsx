@@ -59,9 +59,9 @@ const Header: React.FC = () => {
               </div>
               <div>
                 <h1 className="font-['Nunito'] font-bold text-2xl bg-gradient-to-r from-purple-600 via-pink-500 to-purple-400 bg-clip-text text-transparent">
-                  Paws n Potions
+                  WoofFix
                 </h1>
-                <div className="text-xs text-pink-400 -mt-1 italic">your magical dog care companion</div>
+                <div className="text-xs text-pink-400 -mt-1 italic">your complete dog care solution</div>
               </div>
             </motion.div>
           </Link>

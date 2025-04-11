@@ -128,9 +128,9 @@ const Footer: React.FC = () => {
               </div>
               <div>
                 <h3 className="font-['Nunito'] font-bold text-xl bg-gradient-to-r from-white via-pink-200 to-purple-100 bg-clip-text text-transparent">
-                  Paws n Potions
+                  WoofFix
                 </h3>
-                <div className="text-xs text-pink-200 -mt-1">your magical dog care companion</div>
+                <div className="text-xs text-pink-200 -mt-1">your complete dog care solution</div>
               </div>
             </motion.div>
             
