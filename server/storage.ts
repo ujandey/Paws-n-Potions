@@ -358,4 +358,221 @@ export class MemStorage implements IStorage {
   }
 }
 
-export const storage = new MemStorage();
+import { supabase } from './supabase';
+
+export class SupabaseStorage implements IStorage {
+  // User methods
+  async getUser(id: number): Promise<User | undefined> {
+    const { data, error } = await supabase
+      .from('users')
+      .select('*')
+      .eq('id', id)
+      .single();
+    
+    if (error) {
+      console.error('Error fetching user:', error);
+      return undefined;
+    }
+    
+    return data as User;
+  }
+
+  async getUserByUsername(username: string): Promise<User | undefined> {
+    const { data, error } = await supabase
+      .from('users')
+      .select('*')
+      .eq('username', username)
+      .single();
+    
+    if (error) {
+      if (error.code !== 'PGRST116') { // Not found error
+        console.error('Error fetching user by username:', error);
+      }
+      return undefined;
+    }
+    
+    return data as User;
+  }
+
+  async createUser(user: InsertUser): Promise<User> {
+    const { data, error } = await supabase
+      .from('users')
+      .insert([user])
+      .select()
+      .single();
+    
+    if (error) {
+      console.error('Error creating user:', error);
+      throw new Error(`Error creating user: ${error.message}`);
+    }
+    
+    return data as User;
+  }
+  
+  // Breed methods
+  async getAllBreeds(): Promise<Breed[]> {
+    const { data, error } = await supabase
+      .from('breeds')
+      .select('*');
+    
+    if (error) {
+      console.error('Error fetching all breeds:', error);
+      return [];
+    }
+    
+    return data as Breed[];
+  }
+  
+  async getBreedById(id: number): Promise<Breed | undefined> {
+    const { data, error } = await supabase
+      .from('breeds')
+      .select('*')
+      .eq('id', id)
+      .single();
+    
+    if (error) {
+      console.error('Error fetching breed by id:', error);
+      return undefined;
+    }
+    
+    return data as Breed;
+  }
+  
+  async getRecommendedBreeds(livingSpace: string, activityLevel: string, experience: string): Promise<Breed[]> {
+    // We'll need to fetch all breeds and filter in code since Supabase
+    // doesn't support complex filtering logic directly
+    const allBreeds = await this.getAllBreeds();
+    
+    // Living space consideration
+    let sizeFilter: string[] = [];
+    if (livingSpace === 'apartment') {
+      sizeFilter = ['small', 'medium'];
+    } else if (livingSpace === 'house-small-yard') {
+      sizeFilter = ['small', 'medium', 'large'];
+    } else {
+      // For larger spaces, any size is fine
+      sizeFilter = ['small', 'medium', 'large'];
+    }
+    
+    // Activity level consideration
+    let energyFilter: string[] = [];
+    if (activityLevel === 'sedentary') {
+      energyFilter = ['low'];
+    } else if (activityLevel === 'moderately-active') {
+      energyFilter = ['low', 'medium'];
+    } else if (activityLevel === 'active') {
+      energyFilter = ['medium', 'high'];
+    } else {
+      energyFilter = ['high'];
+    }
+    
+    // Experience level consideration
+    let trainabilityFilter: string[] = [];
+    if (experience === 'first-time') {
+      trainabilityFilter = ['easy'];
+    } else if (experience === 'some-experience') {
+      trainabilityFilter = ['easy', 'moderate'];
+    } else {
+      trainabilityFilter = ['easy', 'moderate', 'difficult'];
+    }
+    
+    // Apply filters - using any as a workaround since the actual shape of the data might differ
+    const filteredBreeds = allBreeds.filter((breed: any) => {
+      const energyLevel = breed.energy_needs || breed.energyLevel;
+      return (
+        sizeFilter.includes(breed.size) &&
+        energyFilter.includes(energyLevel) &&
+        trainabilityFilter.includes(breed.trainability)
+      );
+    });
+    
+    // Return top matches (limit to 5)
+    return filteredBreeds.slice(0, 5);
+  }
+  
+  // Guide methods
+  async getAllGuides(category?: string): Promise<Guide[]> {
+    let query = supabase.from('guides').select('*');
+    
+    if (category) {
+      query = query.eq('category', category);
+    }
+    
+    const { data, error } = await query;
+    
+    if (error) {
+      console.error('Error fetching guides:', error);
+      return [];
+    }
+    
+    return data as Guide[];
+  }
+  
+  async getGuideById(id: number): Promise<Guide | undefined> {
+    const { data, error } = await supabase
+      .from('guides')
+      .select('*')
+      .eq('id', id)
+      .single();
+    
+    if (error) {
+      console.error('Error fetching guide by id:', error);
+      return undefined;
+    }
+    
+    return data as Guide;
+  }
+  
+  async getFeaturedGuides(): Promise<Guide[]> {
+    const { data, error } = await supabase
+      .from('guides')
+      .select('*')
+      .eq('is_featured', true)
+      .limit(3);
+    
+    if (error) {
+      console.error('Error fetching featured guides:', error);
+      return [];
+    }
+    
+    if (data.length === 0) {
+      // Fallback to returning first 3 guides if no featured guides are set
+      return (await this.getAllGuides()).slice(0, 3);
+    }
+    
+    return data as Guide[];
+  }
+  
+  // Testimonial methods
+  async getAllTestimonials(): Promise<Testimonial[]> {
+    const { data, error } = await supabase
+      .from('testimonials')
+      .select('*');
+    
+    if (error) {
+      console.error('Error fetching testimonials:', error);
+      return [];
+    }
+    
+    return data as Testimonial[];
+  }
+  
+  // Contact methods
+  async createContactSubmission(submission: InsertContactSubmission): Promise<ContactSubmission> {
+    const { data, error } = await supabase
+      .from('contact_submissions')
+      .insert([submission])
+      .select()
+      .single();
+    
+    if (error) {
+      console.error('Error creating contact submission:', error);
+      throw new Error(`Error creating contact submission: ${error.message}`);
+    }
+    
+    return data as ContactSubmission;
+  }
+}
+
+// Use SupabaseStorage in production and MemStorage for testing if needed
+export const storage = new SupabaseStorage();
