@@ -139,18 +139,22 @@ const Footer: React.FC = () => {
             </p>
             
             <div className="flex space-x-4">
-              {['facebook-f', 'instagram', 'twitter', 'tiktok'].map((platform, i) => (
+              {[
+                { platform: 'facebook-f', url: 'https://www.facebook.com/pawsnpotions' },
+                { platform: 'instagram', url: 'https://www.instagram.com/pawsnpotions' },
+                { platform: 'twitter', url: 'https://www.twitter.com/pawsnpotions' }
+              ].map((item, i) => (
                 <motion.a 
-                  key={platform}
-                  href="#" 
+                  key={item.platform}
+                  href={item.url}
                   className="flex items-center justify-center w-10 h-10 rounded-full bg-white bg-opacity-20 text-white hover:bg-pink-500 hover:text-white transition-colors"
-                  aria-label={platform}
+                  aria-label={item.platform}
                   whileHover={{ scale: 1.1, y: -3 }}
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: i * 0.1 }}
                 >
-                  <i className={`fab fa-${platform}`}></i>
+                  <i className={`fab fa-${item.platform}`}></i>
                 </motion.a>
               ))}
             </div>
@@ -162,7 +166,7 @@ const Footer: React.FC = () => {
               {[
                 { path: '/', label: 'Home' },
                 { path: '/get-started', label: 'Get Started Guide' },
-                { path: '/get-started', label: 'Dog Breed Finder' },
+                { path: '/breed-finder', label: 'Dog Breed Finder' },
                 { path: '/feeding', label: 'Feeding Guidelines' },
                 { path: '/training', label: 'Training Resources' },
                 { path: '/health', label: 'Health & Wellness' }
@@ -189,12 +193,12 @@ const Footer: React.FC = () => {
             <h4 className="font-['Nunito'] font-bold text-lg mb-5 text-pink-200">Resources</h4>
             <ul className="space-y-3">
               {[
-                { path: '/budget', label: 'Budget Calculator' },
-                { path: '#', label: 'Emergency Vet Locator' },
-                { path: '#', label: 'Dog Food Reviews' },
-                { path: '#', label: 'Community Forum' },
+                { path: '/budget-calculator', label: 'Budget Calculator' },
+                { path: '/emergency-vet', label: 'Emergency Vet Locator' },
+                { path: '/food-reviews', label: 'Dog Food Reviews' },
+                { path: '/forum', label: 'Community Forum' },
                 { path: '/blog', label: 'Dog Care Blog' },
-                { path: '#', label: 'Frequently Asked Questions' }
+                { path: '/faq', label: 'Frequently Asked Questions' }
               ].map((item, i) => (
                 <motion.li 
                   key={item.path + item.label}
@@ -202,23 +206,13 @@ const Footer: React.FC = () => {
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: i * 0.05 + 0.3 }}
                 >
-                  {item.path.startsWith('#') ? (
-                    <a 
-                      href={item.path} 
-                      className="group flex items-center text-white text-opacity-80 hover:text-pink-200 transition-colors"
-                    >
-                      <PawPrint className="w-3 h-3 mr-2 text-pink-300 opacity-0 group-hover:opacity-100 transition-opacity" />
-                      <span>{item.label}</span>
-                    </a>
-                  ) : (
-                    <Link 
-                      href={item.path} 
-                      className="group flex items-center text-white text-opacity-80 hover:text-pink-200 transition-colors"
-                    >
-                      <PawPrint className="w-3 h-3 mr-2 text-pink-300 opacity-0 group-hover:opacity-100 transition-opacity" />
-                      <span>{item.label}</span>
-                    </Link>
-                  )}
+                  <Link 
+                    href={item.path} 
+                    className="group flex items-center text-white text-opacity-80 hover:text-pink-200 transition-colors"
+                  >
+                    <PawPrint className="w-3 h-3 mr-2 text-pink-300 opacity-0 group-hover:opacity-100 transition-opacity" />
+                    <span>{item.label}</span>
+                  </Link>
                 </motion.li>
               ))}
             </ul>
@@ -260,8 +254,8 @@ const Footer: React.FC = () => {
               &copy; {new Date().getFullYear()} Paws n Potions. All rights reserved.
             </p>
             <div className="flex space-x-6">
-              <a href="#" className="text-white text-opacity-60 hover:text-pink-200 text-sm transition-colors">Privacy Policy</a>
-              <a href="#" className="text-white text-opacity-60 hover:text-pink-200 text-sm transition-colors">Terms of Service</a>
+              <a href="/privacy-policy" className="text-white text-opacity-60 hover:text-pink-200 text-sm transition-colors">Privacy Policy</a>
+              <a href="/terms" className="text-white text-opacity-60 hover:text-pink-200 text-sm transition-colors">Terms of Service</a>
               <Link href="/contact" className="text-white text-opacity-60 hover:text-pink-200 text-sm transition-colors">Contact Us</Link>
             </div>
           </div>
