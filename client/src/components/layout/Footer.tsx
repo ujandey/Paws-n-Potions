@@ -57,90 +57,212 @@ const Footer: React.FC = () => {
   };
 
   return (
-    <footer className="bg-[#4D7EA8] text-white pt-12 pb-6">
-      <div className="container mx-auto px-4">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+    <footer className="relative overflow-hidden bg-gradient-to-br from-purple-700 via-fuchsia-600 to-pink-500 text-white pt-16 pb-8">
+      {/* Decorative elements */}
+      <div className="absolute top-0 left-0 w-full overflow-hidden">
+        <div className="relative h-16">
+          <svg 
+            className="absolute bottom-0 w-full h-16" 
+            preserveAspectRatio="none"
+            viewBox="0 0 1440 74" 
+            fill="none" 
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path 
+              d="M0,0 C288,42 720,74 1440,42 L1440,74 L0,74 Z" 
+              fill="white"
+              opacity="0.1"
+            />
+          </svg>
+        </div>
+      </div>
+      
+      {/* Floating icons */}
+      <div className="absolute inset-0 pointer-events-none">
+        <motion.div 
+          className="absolute top-12 left-[5%]"
+          animate={{ y: [0, -15, 0] }}
+          transition={{ repeat: Infinity, duration: 5, ease: "easeInOut" }}
+        >
+          <PawPrint className="w-8 h-8 text-pink-300 opacity-40" />
+        </motion.div>
+        <motion.div 
+          className="absolute top-24 right-[10%]"
+          animate={{ y: [0, -10, 0] }}
+          transition={{ repeat: Infinity, duration: 3.5, ease: "easeInOut", delay: 0.5 }}
+        >
+          <Flower className="w-10 h-10 text-purple-300 opacity-30" />
+        </motion.div>
+        <motion.div 
+          className="absolute bottom-20 left-[15%]"
+          animate={{ y: [0, -12, 0] }}
+          transition={{ repeat: Infinity, duration: 4, ease: "easeInOut", delay: 1 }}
+        >
+          <PotionBottle className="w-8 h-8 text-pink-200 opacity-40" />
+        </motion.div>
+        <motion.div 
+          className="absolute bottom-40 right-[8%]"
+          animate={{ y: [0, -8, 0] }}
+          transition={{ repeat: Infinity, duration: 4.5, ease: "easeInOut", delay: 1.5 }}
+        >
+          <DogSilhouette className="w-12 h-12 text-purple-200 opacity-30" />
+        </motion.div>
+      </div>
+      
+      <div className="container mx-auto px-4 relative z-10">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-10 mb-12">
           <div>
-            <div className="flex items-center space-x-2 mb-4">
-              <i className="fas fa-paw text-2xl text-[#F9A03F]"></i>
-              <span className="font-['Nunito'] font-bold text-xl">PawParents</span>
-            </div>
-            <p className="text-white text-opacity-80 mb-4">
-              Comprehensive resources for first-time dog owners, helping you navigate the joys and challenges of dog parenthood.
+            <motion.div 
+              className="flex items-center space-x-2 mb-4"
+              initial={{ x: -50, opacity: 0 }}
+              animate={{ x: 0, opacity: 1 }}
+              transition={{ duration: 0.5 }}
+            >
+              <div className="relative">
+                <PotionBottle className="h-8 w-8 text-pink-300" />
+                <motion.div 
+                  className="absolute -top-1 -right-1 w-3 h-3 bg-purple-300 rounded-full"
+                  animate={{ scale: [1, 1.3, 1] }}
+                  transition={{ repeat: Infinity, duration: 2 }}
+                />
+              </div>
+              <div>
+                <h3 className="font-['Nunito'] font-bold text-xl bg-gradient-to-r from-white via-pink-200 to-purple-100 bg-clip-text text-transparent">
+                  Paws n Potions
+                </h3>
+                <div className="text-xs text-pink-200 -mt-1">your magical dog care companion</div>
+              </div>
+            </motion.div>
+            
+            <p className="text-white text-opacity-90 mb-6">
+              Magical resources for first-time dog parents, helping you navigate the enchanting journey of dog companionship with a sprinkle of fun!
             </p>
+            
             <div className="flex space-x-4">
-              <a href="#" className="text-white hover:text-[#F9A03F] transition-colors" aria-label="Facebook">
-                <i className="fab fa-facebook-f"></i>
-              </a>
-              <a href="#" className="text-white hover:text-[#F9A03F] transition-colors" aria-label="Instagram">
-                <i className="fab fa-instagram"></i>
-              </a>
-              <a href="#" className="text-white hover:text-[#F9A03F] transition-colors" aria-label="Twitter">
-                <i className="fab fa-twitter"></i>
-              </a>
-              <a href="#" className="text-white hover:text-[#F9A03F] transition-colors" aria-label="Pinterest">
-                <i className="fab fa-pinterest"></i>
-              </a>
+              {['facebook-f', 'instagram', 'twitter', 'tiktok'].map((platform, i) => (
+                <motion.a 
+                  key={platform}
+                  href="#" 
+                  className="flex items-center justify-center w-10 h-10 rounded-full bg-white bg-opacity-20 text-white hover:bg-pink-500 hover:text-white transition-colors"
+                  aria-label={platform}
+                  whileHover={{ scale: 1.1, y: -3 }}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: i * 0.1 }}
+                >
+                  <i className={`fab fa-${platform}`}></i>
+                </motion.a>
+              ))}
             </div>
           </div>
           
           <div>
-            <h4 className="font-['Nunito'] font-semibold text-lg mb-4">Quick Links</h4>
-            <ul className="space-y-2">
-              <li><Link href="/" className="text-white text-opacity-80 hover:text-[#F9A03F] transition-colors">Home</Link></li>
-              <li><Link href="/get-started" className="text-white text-opacity-80 hover:text-[#F9A03F] transition-colors">Get Started Guide</Link></li>
-              <li><Link href="/get-started" className="text-white text-opacity-80 hover:text-[#F9A03F] transition-colors">Dog Breed Finder</Link></li>
-              <li><Link href="/feeding" className="text-white text-opacity-80 hover:text-[#F9A03F] transition-colors">Feeding Guidelines</Link></li>
-              <li><Link href="/training" className="text-white text-opacity-80 hover:text-[#F9A03F] transition-colors">Training Resources</Link></li>
-              <li><Link href="/health" className="text-white text-opacity-80 hover:text-[#F9A03F] transition-colors">Health & Wellness</Link></li>
+            <h4 className="font-['Nunito'] font-bold text-lg mb-5 text-pink-200">Quick Links</h4>
+            <ul className="space-y-3">
+              {[
+                { path: '/', label: 'Home' },
+                { path: '/get-started', label: 'Get Started Guide' },
+                { path: '/get-started', label: 'Dog Breed Finder' },
+                { path: '/feeding', label: 'Feeding Guidelines' },
+                { path: '/training', label: 'Training Resources' },
+                { path: '/health', label: 'Health & Wellness' }
+              ].map((item, i) => (
+                <motion.li 
+                  key={item.path + item.label}
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: i * 0.05 + 0.2 }}
+                >
+                  <Link 
+                    href={item.path} 
+                    className="group flex items-center text-white text-opacity-80 hover:text-pink-200 transition-colors"
+                  >
+                    <PawPrint className="w-3 h-3 mr-2 text-pink-300 opacity-0 group-hover:opacity-100 transition-opacity" />
+                    <span>{item.label}</span>
+                  </Link>
+                </motion.li>
+              ))}
             </ul>
           </div>
           
           <div>
-            <h4 className="font-['Nunito'] font-semibold text-lg mb-4">Resources</h4>
-            <ul className="space-y-2">
-              <li><Link href="/budget" className="text-white text-opacity-80 hover:text-[#F9A03F] transition-colors">Budget Calculator</Link></li>
-              <li><a href="#" className="text-white text-opacity-80 hover:text-[#F9A03F] transition-colors">Emergency Vet Locator</a></li>
-              <li><a href="#" className="text-white text-opacity-80 hover:text-[#F9A03F] transition-colors">Dog Food Reviews</a></li>
-              <li><a href="#" className="text-white text-opacity-80 hover:text-[#F9A03F] transition-colors">Community Forum</a></li>
-              <li><Link href="/blog" className="text-white text-opacity-80 hover:text-[#F9A03F] transition-colors">Blog</Link></li>
-              <li><a href="#" className="text-white text-opacity-80 hover:text-[#F9A03F] transition-colors">Frequently Asked Questions</a></li>
+            <h4 className="font-['Nunito'] font-bold text-lg mb-5 text-pink-200">Resources</h4>
+            <ul className="space-y-3">
+              {[
+                { path: '/budget', label: 'Budget Calculator' },
+                { path: '#', label: 'Emergency Vet Locator' },
+                { path: '#', label: 'Dog Food Reviews' },
+                { path: '#', label: 'Community Forum' },
+                { path: '/blog', label: 'Dog Care Blog' },
+                { path: '#', label: 'Frequently Asked Questions' }
+              ].map((item, i) => (
+                <motion.li 
+                  key={item.path + item.label}
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: i * 0.05 + 0.3 }}
+                >
+                  {item.path.startsWith('#') ? (
+                    <a 
+                      href={item.path} 
+                      className="group flex items-center text-white text-opacity-80 hover:text-pink-200 transition-colors"
+                    >
+                      <PawPrint className="w-3 h-3 mr-2 text-pink-300 opacity-0 group-hover:opacity-100 transition-opacity" />
+                      <span>{item.label}</span>
+                    </a>
+                  ) : (
+                    <Link 
+                      href={item.path} 
+                      className="group flex items-center text-white text-opacity-80 hover:text-pink-200 transition-colors"
+                    >
+                      <PawPrint className="w-3 h-3 mr-2 text-pink-300 opacity-0 group-hover:opacity-100 transition-opacity" />
+                      <span>{item.label}</span>
+                    </Link>
+                  )}
+                </motion.li>
+              ))}
             </ul>
           </div>
           
           <div>
-            <h4 className="font-['Nunito'] font-semibold text-lg mb-4">Subscribe</h4>
+            <h4 className="font-['Nunito'] font-bold text-lg mb-5 text-pink-200">Subscribe for Magic</h4>
             <p className="text-white text-opacity-80 mb-4">
-              Join our newsletter for the latest guides, tips, and resources for dog parents.
+              Join our newsletter for the latest guides, tips, and enchanted resources for dog parents.
             </p>
-            <form onSubmit={handleSubmit} className="flex">
+            <motion.form 
+              onSubmit={handleSubmit} 
+              className="flex"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.5 }}
+            >
               <Input
                 type="email"
                 placeholder="Your email address"
-                className="rounded-r-none focus:ring-2 focus:ring-[#F9A03F] text-gray-800"
+                className="rounded-r-none border-white/30 bg-white/10 text-white placeholder:text-white/50 focus-visible:ring-purple-400"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
               />
               <Button 
                 type="submit" 
-                className="bg-[#F9A03F] text-white rounded-l-none hover:bg-opacity-90"
+                className="bg-gradient-to-r from-purple-500 to-pink-500 text-white rounded-l-none hover:opacity-90"
                 aria-label="Subscribe"
               >
                 <i className="fas fa-paper-plane"></i>
               </Button>
-            </form>
+            </motion.form>
           </div>
         </div>
         
         <div className="border-t border-white border-opacity-20 pt-6 mt-8">
           <div className="flex flex-col md:flex-row justify-between items-center">
             <p className="text-white text-opacity-60 text-sm mb-4 md:mb-0">
-              &copy; {new Date().getFullYear()} PawParents. All rights reserved.
+              &copy; {new Date().getFullYear()} Paws n Potions. All rights reserved.
             </p>
-            <div className="flex space-x-4">
-              <a href="#" className="text-white text-opacity-60 hover:text-[#F9A03F] text-sm transition-colors">Privacy Policy</a>
-              <a href="#" className="text-white text-opacity-60 hover:text-[#F9A03F] text-sm transition-colors">Terms of Service</a>
-              <Link href="/contact" className="text-white text-opacity-60 hover:text-[#F9A03F] text-sm transition-colors">Contact Us</Link>
+            <div className="flex space-x-6">
+              <a href="#" className="text-white text-opacity-60 hover:text-pink-200 text-sm transition-colors">Privacy Policy</a>
+              <a href="#" className="text-white text-opacity-60 hover:text-pink-200 text-sm transition-colors">Terms of Service</a>
+              <Link href="/contact" className="text-white text-opacity-60 hover:text-pink-200 text-sm transition-colors">Contact Us</Link>
             </div>
           </div>
         </div>

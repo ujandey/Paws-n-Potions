@@ -88,8 +88,8 @@ const GuidePreview: React.FC = () => {
         
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {isLoading
-            ? Array(3).fill(0).map((_, idx) => renderSkeletonItem())
-            : featuredGuides?.map(guide => renderGuideItem(guide))}
+            ? Array(3).fill(0).map((_, idx) => <div key={`skeleton-${idx}`}>{renderSkeletonItem()}</div>)
+            : featuredGuides?.map(guide => <div key={`guide-${guide.id}`}>{renderGuideItem(guide)}</div>)}
         </div>
 
         <div className="text-center mt-10">
