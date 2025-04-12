@@ -1,3 +1,4 @@
+
 import { Switch, Route } from "wouter";
 import { queryClient } from "./lib/queryClient";
 import { QueryClientProvider } from "@tanstack/react-query";
@@ -14,8 +15,6 @@ import Budget from "@/pages/Budget";
 import Blog from "@/pages/Blog";
 import Contact from "@/pages/Contact";
 import NotFound from "@/pages/not-found";
-import AuthPage from "@/pages/Auth"; 
-
 
 function Router() {
   return (
@@ -23,7 +22,6 @@ function Router() {
       <Header />
       <main className="flex-grow">
         <Switch>
-          <Route path="/auth" component={AuthPage} />
           <Route path="/" component={Home} />
           <Route path="/get-started" component={GetStarted} />
           <Route path="/feeding" component={Feeding} />
