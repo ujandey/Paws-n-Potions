@@ -14,8 +14,7 @@ import Budget from "@/pages/Budget";
 import Blog from "@/pages/Blog";
 import Contact from "@/pages/Contact";
 import NotFound from "@/pages/not-found";
-import AuthPage from "@/pages/Auth"; // Assuming this component exists
-import ProtectedRoute from "@/components/ProtectedRoute"; // Assuming this component exists
+import AuthPage from "@/pages/Auth"; 
 
 
 function Router() {
@@ -25,46 +24,14 @@ function Router() {
       <main className="flex-grow">
         <Switch>
           <Route path="/auth" component={AuthPage} />
-          <Route path="/">
-            <ProtectedRoute>
-              <Home />
-            </ProtectedRoute>
-          </Route>
-          <Route path="/health">
-            <ProtectedRoute>
-              <Health />
-            </ProtectedRoute>
-          </Route>
-          <Route path="/training">
-            <ProtectedRoute>
-              <Training />
-            </ProtectedRoute>
-          </Route>
-          <Route path="/feeding">
-            <ProtectedRoute>
-              <Feeding />
-            </ProtectedRoute>
-          </Route>
-          <Route path="/budget">
-            <ProtectedRoute>
-              <Budget />
-            </ProtectedRoute>
-          </Route>
-          <Route path="/blog">
-            <ProtectedRoute>
-              <Blog />
-            </ProtectedRoute>
-          </Route>
-          <Route path="/get-started">
-            <ProtectedRoute>
-              <GetStarted />
-            </ProtectedRoute>
-          </Route>
-          <Route path="/contact">
-            <ProtectedRoute>
-              <Contact />
-            </ProtectedRoute>
-          </Route>
+          <Route path="/" component={Home} />
+          <Route path="/get-started" component={GetStarted} />
+          <Route path="/feeding" component={Feeding} />
+          <Route path="/training" component={Training} />
+          <Route path="/health" component={Health} />
+          <Route path="/budget" component={Budget} />
+          <Route path="/blog" component={Blog} />
+          <Route path="/contact" component={Contact} />
           <Route component={NotFound} />
         </Switch>
       </main>
